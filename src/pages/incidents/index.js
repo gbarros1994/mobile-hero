@@ -24,7 +24,7 @@ export default function Incidents() {
     }
 
     useEffect(() => {
-
+        loadIncidents();
     }, []);
 
     return (
@@ -43,7 +43,7 @@ export default function Incidents() {
                 style={styles.incidentList}
                 data={incidents}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={incident => String(incident)}
+                keyExtractor={incident => String(incident.id)}
                 renderItem={({ item: incident }) => (
                     <View style={styles.incident}>
                         <Text style={styles.incidentProperty}>ONG:</Text>
