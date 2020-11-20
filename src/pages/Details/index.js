@@ -2,7 +2,7 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TouchableOpacity, _View, Linking } from 'react-native';
-// import * as MailComposer from 'expo-mail-composer';
+import * as MailComposer from 'expo-mail-composer';
 
 import styles from './styles';
 
@@ -13,18 +13,18 @@ export default function Incidents() {
     const route = useRoute();
 
     const incident = route.params.incident;
-    const message = 'Olá APAD, estou entrando em contato pois gostaria de ajudar no caso cadelinha atropelada';
+    const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso ${incident.title} com valor de ${incident.value}`;
 
     function navigateToBack() {
         navigation.goBack();
     }
 
     function sendMail() {
-        // MailComposer.composeAsync({
-        //     subject: 'Heroi do caso: Cadelinha atropelada',
-        //     recipients: ['gersonalifer@hotmail.com'],
-        //     body: message,
-        // });
+        MailComposer.composeAsync({
+            subject: `Heroi do caso: ${incident.title}`,
+            recipients: [incident.email],
+            body: message,
+        });
     }
 
     function sendWhatsapp() {
@@ -42,7 +42,7 @@ export default function Incidents() {
 
             <View style={styles.incident}>
                 <Text style={[styles.incidentProperty, {marginTop:0}]}>ONG:</Text>
-                <Text style={styles.incidentValue}>{incident.name}</Text>
+                <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
 
                 <Text style={styles.incidentProperty}>CASO:</Text>
                 <Text style={styles.incidentValue}>{incident.title}</Text>
